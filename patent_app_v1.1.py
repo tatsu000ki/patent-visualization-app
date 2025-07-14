@@ -37,6 +37,7 @@ def load_country(path: str) -> pd.DataFrame:
     df.rename(columns=rename_map, inplace=True)
     return df[['year_month','technical_element','key','count','ma_6','conversion_flag']]
 
+# 相対パスでデータを指定
 monthly_path = 'data/input/combined_patent_counts_by_month_with_flags.csv'
 country_path = 'data/input/patent_country_merged_file_with_flags.csv'
 
@@ -72,7 +73,7 @@ fig_monthly = px.line(
 )
 color_map = {t.name: t.line.color for t in fig_monthly.data}
 
-# 移動平均線を追加
+# 移動平均線を追加（凡例にカテゴリ名を含める）
 if show_ma:
     for k in keys:
         d = df[df['key']==k]
@@ -80,7 +81,7 @@ if show_ma:
             x=d['year_month'], y=d['ma_6'],
             mode='lines',
             line=dict(dash='dot', color=color_map[k]),
-            name='6ヶ月移動平均',
+            name=f"{k} (6ヶ月MA)",
             legendgroup=k
         )
 
@@ -121,7 +122,7 @@ fig_cum = px.line(
 )
 color_map_cum = {t.name: t.line.color for t in fig_cum.data}
 
-# 累積移動平均線を追加
+# 累積移動平均線を追加（凡例にカテゴリ名を含める）
 if show_ma:
     for k in keys:
         d = df[df['key']==k].copy()
@@ -130,7 +131,7 @@ if show_ma:
             x=d['year_month'], y=d['ma6_cum'],
             mode='lines',
             line=dict(dash='dot', color=color_map_cum[k]),
-            name='累積6ヶ月移動平均',
+            name=f"{k} (累積6ヶ月MA)",
             legendgroup=k
         )
 
