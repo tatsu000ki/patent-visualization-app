@@ -199,4 +199,3 @@ st.dataframe(df[['year_month', group_col, 'count', 'ma_6', 'conversion_flag']])
 st.markdown('---')
 path_disp = monthly_path if view_mode == '月次件数推移' else country_path
 st.caption(f"データソース: {path_disp}")
-
