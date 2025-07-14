@@ -1,4 +1,7 @@
 import streamlit as st
+
+# アプリをワイドモードで初期化
+st.set_page_config(layout="wide")
 import pandas as pd
 import plotly.express as px
 
