@@ -43,8 +43,8 @@ def load_country(path: str) -> pd.DataFrame:
     return df[['year_month', 'technical_element', 'key', 'count', 'ma_6', 'conversion_flag']]
 
 # — ファイルパス（_with_flags.csv版） —
-monthly_path = r'C:\Users\J0232466\python\エコシステム\data\input\combined_patent_counts_by_month_with_flags.csv'
-country_path = r'C:\Users\J0232466\python\エコシステム\data\input\patent_country_merged_file_with_flags.csv'
+monthly_path = 'data/input/combined_patent_counts_by_month_with_flags.csv'
+country_path = 'data/input/patent_country_merged_file_with_flags.csv'
 
 # — サイドバー設定 —
 data_type = st.sidebar.radio(
