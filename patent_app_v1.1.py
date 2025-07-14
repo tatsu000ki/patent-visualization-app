@@ -1,6 +1,3 @@
-# monthly_path = 'data/input/combined_patent_counts_by_month_with_flags.csv'
-# country_path = 'data/input/patent_country_merged_file_with_flags.csv'
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
