@@ -61,8 +61,11 @@ paper_country   = 'data/input/paper_country_merged_file_with_flags.csv'
 # -----------------------
 kind = st.sidebar.selectbox('対象データ', ['特許','論文'], key='kind')
 if kind == '特許':
-    view_mode = st.sidebar.selectbox('表示タイプ',
-        ['月次件数推移','国別件数推移','企業別件数推移','業界別件数推移'], key='view_mode')
+    view_mode = st.sidebar.selectbox(
+        '表示タイプ',
+        ['月次件数推移', '国別件数推移', '業界別件数推移', '企業別件数推移'],
+        key='view_mode'
+    )
 else:
     view_mode = st.sidebar.selectbox('表示タイプ',
         ['月次件数推移','国別件数推移'], key='view_mode')
