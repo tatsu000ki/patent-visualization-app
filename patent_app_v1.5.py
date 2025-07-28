@@ -38,7 +38,7 @@ paths = {
         "業界別件数推移": "data/input/paper_industry_merged_file_with_flags.csv",
     },
 }
-difficulty_path = "data/input/ecosystem_analysis_result_eng.csv"
+difficulty_path = "data/input/ecosystem_analysis_result_eng copy.csv"
 
 # ───────────────────────── LOADERS ─────────────────────────
 @st.cache_data
@@ -138,17 +138,15 @@ if mode == "技術難易度":
         score_col = next((c for c in score_candidates if c in df_sel.columns), metric)
 
     # ── Composite Score → bar chart by tech × industry/company ──
-    if metric == "Composite_Score":
-        bar_tech = st.sidebar.selectbox(
-            "技術要素（バーチャート用）",
-            options=df_diff["technical_element"].unique().tolist(),
-            key="bar_tech"
-        )
-        bar_df = (
-            df_sel[df_sel["technical_element"] == bar_tech][["technical_element", group_dim, score_col]]
-            .sort_values(score_col, ascending=False)
-        )
-    # bar chart display moved below score table
+    bar_tech = st.sidebar.selectbox(
+        "技術要素（バーチャート用）",
+        options=df_diff["technical_element"].unique().tolist(),
+        key="bar_tech"
+    )
+    bar_df = (
+        df_sel[df_sel["technical_element"] == bar_tech][["technical_element", group_dim, score_col]]
+        .sort_values(score_col, ascending=False)
+    )
 
     # ── TRL / Technical / Social → radar chart ──
     radar_df = (
@@ -168,26 +166,30 @@ if mode == "技術難易度":
     fig.update_traces(fill="none")
     st.plotly_chart(fig, use_container_width=True)
 
-    if metric == "Composite_Score":
-        # Composite Score – bar chart below radar chart
-        st.subheader(f"Composite Score – 技術要素 × {group_dim}")
-        fig_bar = px.bar(
-            bar_df,
-            x="technical_element",
-            y=score_col,
-            color=group_dim,
-            barmode="group",
-            title=f"Composite Score by Technical Element and {group_dim.capitalize()}",
-            labels={
-                "technical_element": "Technical Element",
-                score_col: "Score",
-                group_dim: group_dim.capitalize(),
-            },
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
+    # bar chart below radar chart
+    st.subheader(f"{metric} – 技術要素 × {group_dim}")
+    fig_bar = px.bar(
+        bar_df,
+        x="technical_element",
+        y=score_col,
+        color=group_dim,
+        barmode="group",
+        title=f"{metric} by Technical Element and {group_dim.capitalize()}",
+        labels={
+            "technical_element": "Technical Element",
+            score_col: "Score",
+            group_dim: group_dim.capitalize(),
+        },
+    )
+    st.plotly_chart(fig_bar, use_container_width=True)
 
     # score table (with optional evidence)
-    comment_candidates = [f"{metric}_Comment_{group_dim}", f"{metric}_Comment_tech"]
+    if metric == "Technical_Feasibility":
+        comment_candidates = [f"Technical_Comment_{group_dim}"]
+    elif metric == "Social_Feasibility":
+        comment_candidates = [f"Social_Comment_{group_dim}"]
+    else:
+        comment_candidates = [f"{metric}_Comment_{group_dim}", f"{metric}_Comment_tech"]
     comment_col = next((c for c in comment_candidates if c in df_sel.columns), None)
 
     cols = ["technical_element", group_dim, score_col]
@@ -203,6 +205,7 @@ if mode == "技術難易度":
     tbl = (
         df_sel[cols]
         .rename(columns=rename_map)
+        .drop_duplicates()
         .sort_values(["Technical Element", rename_map[group_dim]])
     )
     st.subheader(f"{metric} 各スコア" + ("と根拠" if comment_col else ""))
