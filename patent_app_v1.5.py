@@ -38,7 +38,7 @@ paths = {
         "業界別件数推移": "data/input/paper_industry_merged_file_with_flags.csv",
     },
 }
-difficulty_path = "data/input/ecosystem_analysis_result_eng copy.csv"
+difficulty_path = "data/input/ecosystem_analysis_result_eng.csv"
 
 # ───────────────────────── LOADERS ─────────────────────────
 @st.cache_data
