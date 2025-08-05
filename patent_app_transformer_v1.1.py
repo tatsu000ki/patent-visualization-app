@@ -25,8 +25,8 @@ paths = {
         "国別件数推移": "data/input/transformer1/patent_country_merged_file_transformer1.csv",
     },
     "論文": {
-        "月次件数推移": "data/input/transfomer/combined_paper_counts_by_month_with_flags_transformer.csv",
-        "国別件数推移": "data/input/transfomer/paper_country_merged_file_with_flags_transformer.csv",
+        "月次件数推移": "data/input/transformer1/combined_paper_counts_by_month_with_flags_transformer1.csv",
+        "国別件数推移": "data/input/transformer1/paper_country_merged_file_with_flags_transformer1.csv",
     },
 }
 
